@@ -429,6 +429,22 @@
       .toLowerCase()
       .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
+  // Abre una URL externa en una pestaña nueva. Usa un <a> real (creado,
+  // pulsado y quitado del DOM) en vez de window.open(url, "_blank"):
+  // cuando GasoYa se abre como app instalada desde la pantalla de inicio
+  // (modo standalone), window.open() desde JS en iOS a menudo abre una
+  // pestaña de Safari en blanco que nunca llega a cargar la URL — es un
+  // bug conocido de WebKit en apps standalone. Un <a target="_blank">
+  // real sí lo maneja bien.
+  function openExternal(url){
+    var a = document.createElement("a");
+    a.href = url;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
   function haversineKm(lat1, lon1, lat2, lon2){
     var R = 6371;
     var dLat = (lat2-lat1) * Math.PI/180;
@@ -676,7 +692,7 @@
       div.classList.add("clickable");
       div.addEventListener("click", function(){
         var url = "https://www.google.com/maps/search/?api=1&query=" + s.lat + "," + s.lon;
-        window.open(url, "_blank", "noopener");
+        openExternal(url);
       });
     }
     return div;
