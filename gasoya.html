@@ -112,7 +112,17 @@
     *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
   }
 
-  .wrap{position:relative; z-index:1; max-width:600px;margin:0 auto;padding:16px 14px 118px;}
+  .wrap{
+    position:relative; z-index:1; max-width:600px;margin:0 auto;
+    /* calc(...) en vez de un 16px fijo: en iPhone con notch/Dynamic Island,
+       instalada en pantalla de inicio con status bar "black-translucent"
+       (ver <meta apple-mobile-web-app-status-bar-style> + viewport-fit=cover
+       en el <head>), el contenido pasa por debajo de la barra de estado, y
+       sin este hueco la cabecera quedaba parcialmente tapada por el reloj/
+       la cámara. env(safe-area-inset-top) es 0 en dispositivos sin notch,
+       así que no cambia nada ahí. */
+    padding:calc(16px + env(safe-area-inset-top)) 14px 118px;
+  }
 
   /* ---- glass primitive ---- */
   .glass{
