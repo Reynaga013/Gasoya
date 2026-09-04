@@ -218,6 +218,8 @@
     margin-bottom:10px;
     transition:transform 0.2s var(--ease);
   }
+  .card.clickable{cursor:pointer;}
+  .card.clickable:active{transform:scale(0.98);}
   .card.cheapest{border-color:rgba(52,199,89,0.55); box-shadow:0 0 0 1px rgba(52,199,89,0.35), var(--shadow-glass);}
   .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
   .card-brand{font-weight:750;font-size:15px;letter-spacing:-0.01em;}
@@ -641,9 +643,13 @@
           distHtml +
         '</div>' +
       '</div>' +
-      '<div class="card-foot"><span>' + escapeHtml(s.provincia) + '</span><span>' + escapeHtml(s.horario) + '</span></div>';
+      '<div class="card-foot"><span>' + escapeHtml(s.provincia) + '</span><span>' + escapeHtml(s.horario) + (s.lat != null && s.lon != null ? ' · Cómo llegar ↗' : '') + '</span></div>';
 
     div.querySelector(".star-btn").addEventListener("click", function(e){
+      // stopPropagation: la tarjeta entera abre Maps al pulsarla (ver
+      // abajo) — sin esto, pulsar la estrella también dispararía esa
+      // navegación porque el click burbujea hasta el listener de la card.
+      e.stopPropagation();
       // IDEESS se trata siempre como string (mismo tipo que s.id) para que
       // isFav()/toggleFav() comparen consistentemente — antes se convertía
       // a Number aquí pero no en el resto del código, y una gasolinera
@@ -652,6 +658,14 @@
       toggleFav(id);
       render();
     });
+
+    if(s.lat != null && s.lon != null){
+      div.classList.add("clickable");
+      div.addEventListener("click", function(){
+        var url = "https://www.google.com/maps/search/?api=1&query=" + s.lat + "," + s.lon;
+        window.open(url, "_blank", "noopener");
+      });
+    }
     return div;
   }
 
