@@ -6,9 +6,28 @@ guardadas en el navegador, y búsqueda por municipio/provincia.
 
 ## Uso
 
-Abre `gasoya.html` directamente con doble clic (funciona en `file://`), o
-súbelo a cualquier hosting estático (GitHub Pages, Firebase Hosting...).
-No necesita `npm install` ni ningún paso de compilación.
+Abre `index.html` (o `gasoya.html`, es el mismo archivo) directamente con
+doble clic — funciona en `file://`. Para que la geolocalización sea fiable
+en el móvil, mejor alojarla en https:// (ver siguiente sección). No necesita
+`npm install` ni ningún paso de compilación.
+
+## Publicar en GitHub Pages
+
+Ya hay un repositorio git local en esta carpeta (rama `main`, un commit).
+Falta solo el push, que necesita tu cuenta de GitHub autenticada:
+
+1. Crea un repositorio vacío en GitHub (por ejemplo `gasoya`) — **sin**
+   marcar README, .gitignore ni licencia, para que no choque con lo que
+   ya hay aquí.
+2. Desde esta misma carpeta, en tu terminal:
+   ```
+   git remote add origin https://github.com/<tu-usuario>/gasoya.git
+   git push -u origin main
+   ```
+3. En GitHub: Settings → Pages → Source: "Deploy from a branch" → Branch:
+   `main` / `(root)` → Save.
+4. En un par de minutos, la app estará en
+   `https://<tu-usuario>.github.io/gasoya/`.
 
 ## Cómo funciona
 
