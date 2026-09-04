@@ -11,23 +11,31 @@ doble clic — funciona en `file://`. Para que la geolocalización sea fiable
 en el móvil, mejor alojarla en https:// (ver siguiente sección). No necesita
 `npm install` ni ningún paso de compilación.
 
-## Publicar en GitHub Pages
+## Publicada en GitHub Pages
 
-Ya hay un repositorio git local en esta carpeta (rama `main`, un commit).
-Falta solo el push, que necesita tu cuenta de GitHub autenticada:
+`https://reynaga013.github.io/Gasoya/` — repo `Reynaga013/Gasoya`, rama
+`main`. Cada vez que se cambia `gasoya.html`/`index.html` (o los iconos,
+`manifest.json`, etc.), el flujo es:
 
-1. Crea un repositorio vacío en GitHub (por ejemplo `gasoya`) — **sin**
-   marcar README, .gitignore ni licencia, para que no choque con lo que
-   ya hay aquí.
-2. Desde esta misma carpeta, en tu terminal:
-   ```
-   git remote add origin https://github.com/<tu-usuario>/gasoya.git
-   git push -u origin main
-   ```
-3. En GitHub: Settings → Pages → Source: "Deploy from a branch" → Branch:
-   `main` / `(root)` → Save.
-4. En un par de minutos, la app estará en
-   `https://<tu-usuario>.github.io/gasoya/`.
+```
+git add -A
+git commit -m "..."
+git push
+```
+
+El `push` necesita tu cuenta de GitHub autenticada, así que ese paso
+siempre lo ejecutas tú desde tu propia terminal — el resto (editar,
+`git add`, `git commit`) puede dejarse hecho de antemano.
+
+## Icono / "Añadir a pantalla de inicio"
+
+`favicon.ico`, `icon-*.png` (16 a 512 px, más una versión "maskable" para
+Android) y `manifest.json` viven en esta misma carpeta, junto a
+`index.html`/`gasoya.html`. Sirven para que la pestaña del navegador, el
+icono de "Instalar app" de Chrome/Edge y "Añadir a pantalla de inicio" de
+iOS/Android usen el logo de GasoYa (surtidor blanco + gota verde sobre
+degradado azul) en vez del icono genérico. Si se cambia el diseño, hay que
+regenerar todos los tamaños a la vez para que no queden descoordinados.
 
 ## Cómo funciona
 
